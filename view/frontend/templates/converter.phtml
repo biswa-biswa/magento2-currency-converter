@@ -1,0 +1,66 @@
+<?php
+/** @var \Totp\CurrencyConverter\Block\Converter $block */
+?>
+<div class="currency-converter"
+     data-mage-init='{"Totp_CurrencyConverter/js/converter": {
+        "currenciesUrl": "<?= $block->escapeUrl($block->getCurrenciesUrl()) ?>",
+        "rateUrl": "<?= $block->escapeUrl($block->getRateUrl()) ?>",
+        "historyUrl": "<?= $block->escapeUrl($block->getHistoryUrl()) ?>"
+     }}'>
+    <div class="converter-heading">
+        <h1><?= $block->escapeHtml(__('Currency Exchange Converter')) ?></h1>
+        <p><?= $block->escapeHtml(__('Compare reference exchange rates and explore historical movement.')) ?></p>
+    </div>
+
+    <div class="converter-panel">
+        <div class="converter-fields">
+            <div class="field amount-field">
+                <label for="cc-amount"><?= $block->escapeHtml(__('Amount')) ?></label>
+                <input id="cc-amount" type="number" min="0" step="any" value="1">
+            </div>
+            <div class="field">
+                <label for="cc-from"><?= $block->escapeHtml(__('From')) ?></label>
+                <select id="cc-from"><option value="USD">USD</option></select>
+            </div>
+            <button type="button" class="cc-swap" aria-label="<?= $block->escapeHtmlAttr(__('Swap currencies')) ?>" title="<?= $block->escapeHtmlAttr(__('Swap currencies')) ?>">⇄</button>
+            <div class="field">
+                <label for="cc-to"><?= $block->escapeHtml(__('To')) ?></label>
+                <select id="cc-to"><option value="EUR">EUR</option></select>
+            </div>
+        </div>
+
+        <div class="converter-result" aria-live="polite">
+            <div class="cc-result-label"><?= $block->escapeHtml(__('Converted amount')) ?></div>
+            <div class="cc-result-value" id="cc-result">—</div>
+            <div class="cc-rate" id="cc-rate"><?= $block->escapeHtml(__('Loading exchange rate…')) ?></div>
+            <div class="cc-date" id="cc-date"></div>
+        </div>
+        <div class="cc-error" id="cc-error" role="alert"></div>
+    </div>
+
+    <section class="history-panel">
+        <div class="history-header">
+            <div>
+                <h2><?= $block->escapeHtml(__('Historical exchange rate')) ?></h2>
+                <p><?= $block->escapeHtml(__('Daily reference rates for the selected currency pair.')) ?></p>
+            </div>
+            <label for="cc-period" class="period-label">
+                <span class="visually-hidden"><?= $block->escapeHtml(__('History period')) ?></span>
+                <select id="cc-period">
+                    <option value="30"><?= $block->escapeHtml(__('30 days')) ?></option>
+                    <option value="90"><?= $block->escapeHtml(__('90 days')) ?></option>
+                    <option value="180"><?= $block->escapeHtml(__('180 days')) ?></option>
+                    <option value="365"><?= $block->escapeHtml(__('1 year')) ?></option>
+                </select>
+            </label>
+        </div>
+        <div class="chart-wrap">
+            <svg id="cc-chart" viewBox="0 0 900 300" role="img"
+                 aria-label="<?= $block->escapeHtmlAttr(__('Historical exchange rate chart')) ?>">
+                <text x="450" y="150" text-anchor="middle" class="chart-placeholder"><?= $block->escapeHtml(__('Loading chart…')) ?></text>
+            </svg>
+        </div>
+        <div class="chart-legend" id="cc-chart-legend"></div>
+        <p class="cc-disclaimer"><?= $block->escapeHtml(__('Rates are reference rates, not live trading quotes. Data provided by Frankfurter.')) ?></p>
+    </section>
+</div>
